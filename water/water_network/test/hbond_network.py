@@ -159,7 +159,12 @@ def get_frame_edges(water_xyz, box, cell_map, cell_num, head_list, o_list):
     edges : list
         Contains pairs of hydrogen bonded water molecules
     """
-
+    print(" %%% printing head_list %%%")
+    print(head_list)
+    print(" %%% printing cell_num %%%")
+    print(cell_num)
+    print(" %%% printing head_list[1] %%%")
+    print(head_list[1])
     edges = []
     for i in range(1, cell_num+1):
         #Get initial molecule from the head list

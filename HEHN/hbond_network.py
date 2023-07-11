@@ -34,16 +34,16 @@ def get_distance(i_atom, j_atom, box):
 
     return np.sqrt((disp*disp).sum()), disp
 
-def get_angle(water_xyz, i_oxygen, j_oxygen, h_atom, box):
+def get_angle(xyz, i_donor, j_acceptor, h_atom, box):
     """
     Parameters
     -----------
-    water_xyz : np.ndarray
-        contains the coordinates of water molecules
+    xyz : np.ndarray
+        contains the coordinates of molecules
     i_oxygen : int
-        index of oxygen atom on molecule i
+        index of (heavy) donor atom on molecule i
     j_oxygen : int
-        index of oxygen atom on molecule j
+        index of (heavy) acceptor atom on molecule j
     h_atom : int
         index of hydrogen atom that the angle is computed for
     box : float
@@ -55,9 +55,9 @@ def get_angle(water_xyz, i_oxygen, j_oxygen, h_atom, box):
         computed angle
     """
     #Displacement between i_oxygen and the h_atom
-    dist, disp_1 = get_distance(water_xyz[i_oxygen, :], water_xyz[h_atom, :], box)
+    dist, disp_1 = get_distance(xyz[i_donor, :], xyz[h_atom, :], box)
     #Displacement between i_oxygen and j_oxygen
-    dist, disp_2 = get_distance(water_xyz[i_oxygen, :], water_xyz[j_oxygen, :], box)
+    dist, disp_2 = get_distance(xyz[i_donor, :], xyz[j_acceptor, :], box)
 
     #Compute cosine as dot product
     mag_u = np.sqrt((disp_1 * disp_1).sum())
@@ -74,16 +74,16 @@ def get_angle(water_xyz, i_oxygen, j_oxygen, h_atom, box):
 
     return theta
 
-def check_hbond_criteria(water_xyz, i_oxygen, j_oxygen, box):
+def check_hbond_criteria(xyz, i_donor, j_acceptor, box):
     """
     Parameters
     -----------
-    water_xyz : np.ndarray
-        contains the coordinates of water molecules
-    i_oxygen : int
-        index of oxygen atom on molecule i
-    j_oxygen : int
-        index of oxygen atom on molecule j
+    xyz : np.ndarray
+        contains the coordinates of molecules
+    i_donor : int
+        index of donor atom on molecule i
+    j_acceptor : int
+        index of acceptor atom on molecule j
     box : float
         box dimension
 
@@ -93,9 +93,9 @@ def check_hbond_criteria(water_xyz, i_oxygen, j_oxygen, box):
         Returns True if the hydrogen bond criteria is met, False otherwise
     """
 
-    #Hydrogens on i_oxygen
-    h1 = i_oxygen + 1
-    h2 = i_oxygen + 2
+    #Hydrogens on i_donor
+    h1 = i_donor + 1
+    h2 = i_donor + 2
     h_atoms = np.asarray([h1, h2])
 
     #Get distances between hydrogens and j_oxygen
