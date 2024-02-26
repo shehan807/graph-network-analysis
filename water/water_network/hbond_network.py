@@ -137,7 +137,7 @@ def check_hbond_criteria(water_xyz, i_oxygen, j_oxygen, box):
 
     return False
 
-def get_frame_edges(water_xyz, box, cell_map, cell_num, head_list, o_list):
+def get_frame_edges(water_xyz, box, cell_map, cell_num, head_list, o_list, water_residues, water_atoms):
     """
     Parameters
     -----------
@@ -176,6 +176,10 @@ def get_frame_edges(water_xyz, box, cell_map, cell_num, head_list, o_list):
                 i_oxygen = int((i_mol - 1)*3)
                 #Oxygen index of j_mol
                 j_oxygen = int((j_mol - 1)*3)
+                #print("%%% get_distance %%%\n")
+                #print(f"Molecule i: {int(i_mol)}; Atom i: {i_oxygen}\n")
+                #print(f"Molecule j: {int(j_mol)}; Atom j: {j_oxygen}\n")
+
                 #Get distance of this pair
                 dist, disp = get_distance(water_xyz[i_oxygen], water_xyz[j_oxygen], box)
 
@@ -247,12 +251,13 @@ def make_head(head_list, o_list, water_xyz, box, cell_size, cutoff):
     #Loop through the number of water molecules, compute the cell that each molecule oxygen is in and fill in the o_list and head_list
     for i_atom, i in enumerate(range(0, water_xyz.shape[0], 3)):
         icell = 1 + int(water_xyz[i, 0]/cl) + int(water_xyz[i, 1]/cl) * cell_size + int(water_xyz[i, 2]/cl) * cell_size**2
+        #print(f"i_atom = {i_atom}")
         o_list[i_atom+1] = head_list[icell]
         head_list[icell] = i_atom + 1
 
     return head_list, o_list
 
-def get_network(water_xyz, box, cell_map, cell_size, cutoff, frame):
+def get_network(water_xyz, box, cell_map, cell_size, cutoff, frame, water_residues, water_atoms):
     """
     Parameters
     -----------
@@ -289,7 +294,7 @@ def get_network(water_xyz, box, cell_map, cell_size, cutoff, frame):
     head_list, o_list = make_head(head_list, o_list, water_xyz, box, cell_size, cutoff)
 
     #Determine hydrogen bonds/edges
-    edges = get_frame_edges(water_xyz, box, cell_map, cell_num, head_list, o_list)
+    edges = get_frame_edges(water_xyz, box, cell_map, cell_num, head_list, o_list, water_residues, water_atoms)
 
     return edges
 
@@ -426,6 +431,8 @@ def get_water_atoms(traj, res_name):
             water_residues.append(res.index)
             for atom in res.atoms:
                 water_atoms.append(atom.index)
+    print(len(water_residues))
+    print(len(water_atoms))
     return water_residues, water_atoms
 
 def make_graph(edge, res_index):
@@ -472,7 +479,7 @@ def plt_metric(metrics):
         for m in metric: diams.append(m)
 
     weights_water = np.ones_like(diams)/float(len(diams))
-    water_hist, water_edges, water_p = plt.hist(diams, weights=weights_water, bins=40, alpha=0.5, color='midnightblue',label='Water')
+    water_hist, water_edges, water_p = plt.hist(diams, weights=weights_water, bins=40, alpha=0.5, color='midnightblue',label='N1888+')
     plt.legend()
     plt.xlabel("Diameter Length")
     plt.ylabel("Probability")
@@ -482,7 +489,7 @@ def plt_metric(metrics):
 def main():
     
     #Determine number of processes you are using (should be 1 per core)
-    num_cores = 12
+    num_cores = 1
 
     #Load in MDTraj trajectory
     traj = md.load(sys.argv[1], top=sys.argv[2])
@@ -507,7 +514,7 @@ def main():
     num_frames = len(traj)
 
     #Call get_network using the joblib Parallel object
-    edges = Parallel(n_jobs=num_cores, backend="multiprocessing")(delayed(get_network)(water_xyz[frame], traj.unitcell_lengths[0,0], cell_map, 10, 0.4, frame) for frame in range(num_frames))
+    edges = Parallel(n_jobs=num_cores, backend="multiprocessing")(delayed(get_network)(water_xyz[frame], traj.unitcell_lengths[0,0], cell_map, 10, 0.4, frame, water_residues, water_atoms) for frame in range(num_frames))
 
     pickle.dump(edges, open("edges.pkl", "wb"))
 
