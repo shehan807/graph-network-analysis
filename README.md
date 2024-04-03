@@ -5,6 +5,9 @@ Code for calculating inter-species cluster network diameters for various MD simu
     * `network_analysis.py` functions for creating graphs and calculating graph metrics
     * `visualization.py` plotting diameters of graph network
     * `util.py` functions for computing distances, angles, and creating cell maps
+    	* `initialize`: 
+    	* `get_atoms`: 
+    	* `make_head`, `set_cell`, `make_map`: 
 * `examples/` 
     * `water/` See  Int. J. Mol. Sci. 2020, 21(2), 403; https://doi.org/10.3390/ijms21020403 
     * `N1888/` 
