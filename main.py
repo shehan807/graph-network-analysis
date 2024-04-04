@@ -30,7 +30,7 @@ def main():
     check_pkl = config["check_pkl"]
 
     # obtain network prerequisites
-    xyz, traj, cell_map, residues, atoms, num_frames = util.initialize(dcd, pdb, residue_name)
+    xyz, traj, cell_map, residues, atoms, num_frames = util.initialize(dcd, pdb, residue_name, num_cells, cutoff)
     #print(residues)
     #print(atoms)
     # obtain edges 
