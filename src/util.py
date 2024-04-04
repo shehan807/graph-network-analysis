@@ -29,18 +29,16 @@ def initialize(dcd, pdb, residue_name, num_cells, cutoff):
     num_frames : 
         ...
     """
-    traj = md.load(pdb, dcd)
+    traj = md.load(dcd, top=pdb)
+    num_frames = len(traj) 
     box = traj.unitcell_lengths[0,0]
     residues, atoms = get_atoms(traj, residue_name)
     atom_per_res = int(len(atoms) / len(residues))
     xyz = get_xyz(traj, atoms, box, check_coords=True)
-    #print(len(xyz[0]))
+    print(len(xyz))
     #print(len(xyz[0])/len(residues))
     
-    head_list, o_list = make_head(xyz[0], box, num_cells, cutoff, atom_per_res)
-    cell_map = None # make_map(...)
-    num_frames = None
-    return xyz, traj, cell_map, residues, atoms, num_frames
+    return xyz, traj, residues, atoms, num_frames, box, atom_per_res
 def get_atoms(traj, residue_name):
     """Filter out list of indices for residue and respective atoms
     Parameters
@@ -115,34 +113,53 @@ def make_head(xyz, box, num_cells, cutoff, atom_per_res):
         icell = int(xyz[i, 0] / cell_length)\
               + int(xyz[i, 1] / cell_length) * num_cells\
               + int(xyz[i, 2] / cell_length) * num_cells**2
-        print(f"atom index {iatom} located in cell {icell}")
+        #print(f"atom index {iatom} located in cell {icell}")
         linked_list[iatom] = head_list[icell]
-        print(f"linked_list[{iatom}] = head_list[{icell}] = {head_list[icell]}.")
+        #print(f"linked_list[{iatom}] = head_list[{icell}] = {head_list[icell]}.")
         head_list[icell] = iatom
-        print(f"head_list[{icell}] = {iatom}")
+        #print(f"head_list[{icell}] = {iatom}")
 
 
     return head_list, linked_list
 
-def set_cell():
-    pass
-def make_map(M):
+def set_cell(ix, iy, iz, num_cells):
+    icell = (ix + num_cells) % num_cells\
+          + (iy + num_cells) % num_cells * num_cells\
+          + (iz + num_cells) % num_cells * num_cells**2
+    return icell
+def make_map(num_cells):
     """...
+    Creates cell_map, a list of 13 neighboring cells of each of the small cells in the central box including periodic boundary conditions (i.e., to get all 26 neighbors of a cube).
+    See Reference: https://github.com/glennklockwood/allen-tildesley/blob/master/link-cell.f
     Parameters
     ----------
-    M : int
+    num_cells : int
         number of cells each box dimension is divided into to create an MxMxM lattice of cells
     Returns
     -------
     map : np.ndarray
         ...
     """
-    total_cells = M*M*M
-
-    head_list = np.zeros(total_cells)
-    o_list    = np.zeros(num_residues)
-
-    return head_list, o_list, cell_map 
+    total_cells = num_cells*num_cells*num_cells
+    map_size = total_cells * 13 
+    cell_map = np.zeros(map_size + 0) # exclude (0,0,0) 
+    print(f"Creating cell_map of {len(cell_map)} elements, i.e., 13 for each of the {total_cells} cells.")
+    offsets = [(1, 0, 0), (1, 1, 0), (0, 1, 0), (-1, 1, 0),
+               (1, 0, -1), (1, 1, -1), (0, 1, -1), (-1, 1, -1),
+               (1, 0, 1), (1, 1, 1), (0, 1, 1), (-1, 1, 1),
+               (0, 0, 1)
+               ]
+    for iz in range(0,num_cells+0):
+        for iy in range(0,num_cells+0):
+            for ix in range(0,num_cells+0):
+                icell = set_cell(ix, iy, iz, num_cells) * 13
+                # print(f"%%% ({ix},{iy},{iz}) icell = {icell} %%%")
+                for map_index, (dx, dy, dz) in enumerate(offsets): 
+                    neighbor_index = set_cell(ix + dx, iy + dy, iz + dz, num_cells)
+                    cell_map[icell + map_index + 0] = neighbor_index
+                    #print(f"({ix+dx},{iy+dy},{iz+dz}) icell = {neighbor_index}")
+                    #print(f"cell_map[{icell+map_index+0}]={neighbor_index}")
+    return cell_map 
 
 
 def get_distance():
