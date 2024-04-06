@@ -1,7 +1,9 @@
+import os
 import argparse 
 import yaml
 from pathlib import Path
-from src import network_analysis, visualization, util
+from src import visualization, util
+from src.network_analysis import * 
 from joblib import Parallel, delayed 
 
 def main():
@@ -31,15 +33,39 @@ def main():
     check_pkl = config["check_pkl"]
 
     # obtain network prerequisites
-    xyz, traj, residues, atoms, num_frames, box, atom_per_res = util.initialize(dcd, pdb, residue_name, num_cells, cutoff)
+    xyz, traj, traj_filtered, residues, atoms, num_frames, box, atom_per_res = util.initialize(dcd, pdb, residue_name, num_cells, cutoff)
     print(f"{num_frames} frames found.")
-
+    num_frames = 1
     #print(residues)
     #print(atoms)
     # obtain edges 
-    edges = Parallel(n_jobs=num_cores,backend="multiprocessing")(delayed(network_analysis.get_network)(xyz[frame], box, num_cells, cutoff, frame, atom_per_res, residues, atoms, traj, criteria) for frame in range(num_frames))
+    edges = Parallel(n_jobs=num_cores,backend="multiprocessing")(delayed(get_network)(xyz[frame], box, num_cells, cutoff, frame, atom_per_res, residues, atoms, traj, traj_filtered, criteria) for frame in range(num_frames))
 
-    print(edges)
+    with open('edges.txt',"w") as etxt:
+        for edge in edges[0]: 
+            etxt.writelines(str(edge)+"\n")
+    #print(edges)
+    #print(len(edges[0]))
+    #edges[0].append((0,118))
+    #With the edges obtained from get_network, add to a NetworkX graph object
+    graphs = []
+    for edge in edges:
+        res_index = [i for i in range(len(residues))]
+        graph = make_graph(edge, res_index)
+        graphs.append(graph)
+    
+    #Uses the formed graphs to compute graph properties
+    diams = Parallel(n_jobs=num_cores,backend="multiprocessing")(
+            delayed(
+                ###Change the "compute_metric" function here if you want to compute a different property
+                compute_metric
+                )(graphs[frame]) for frame in range(len(graphs)))
+    
+    #print(diams)
+    #Change this function depending on which metric you want to plot or analyze
+    if not os.path.exists(out): os.makedirs(out)
+    visualization.plt_metric(diams, out)
+    
 
 
 if __name__ == "__main__":

@@ -33,12 +33,13 @@ def initialize(dcd, pdb, residue_name, num_cells, cutoff):
     num_frames = len(traj) 
     box = traj.unitcell_lengths[0,0]
     residues, atoms = get_atoms(traj, residue_name)
+    traj_filtered = traj.atom_slice(atoms)
     atom_per_res = int(len(atoms) / len(residues))
     xyz = get_xyz(traj, atoms, box, check_coords=True)
     print(len(xyz))
     #print(len(xyz[0])/len(residues))
     
-    return xyz, traj, residues, atoms, num_frames, box, atom_per_res
+    return xyz, traj, traj_filtered, residues, atoms, num_frames, box, atom_per_res
 def get_atoms(traj, residue_name):
     """Filter out list of indices for residue and respective atoms
     Parameters
@@ -153,19 +154,182 @@ def make_map(num_cells):
         for iy in range(0,num_cells+0):
             for ix in range(0,num_cells+0):
                 icell = set_cell(ix, iy, iz, num_cells) * 13
-                # print(f"%%% ({ix},{iy},{iz}) icell = {icell} %%%")
+                #print(f"%%% ({ix},{iy},{iz}) icell = {icell} %%%")
                 for map_index, (dx, dy, dz) in enumerate(offsets): 
                     neighbor_index = set_cell(ix + dx, iy + dy, iz + dz, num_cells)
                     cell_map[icell + map_index + 0] = neighbor_index
                     #print(f"({ix+dx},{iy+dy},{iz+dz}) icell = {neighbor_index}")
-                    #print(f"cell_map[{icell+map_index+0}]={neighbor_index}")
+                    #print(f"cell_map[{icell+map_index+1}]={neighbor_index}")
     return cell_map 
 
 
-def get_distance():
-    pass
-def get_angle():
-    pass
-def hbond_criteria():
-    pass
+def get_distance(i_atom, j_atom, box):
+    """
+    Parameters 
+    -----------
+    i_atom : int
+        index of atom i
+    j_atom : int
+        index of atom j
+    box : float
+        box dimension
+
+    Returns
+    -----------
+    dist : float
+        minimum image distance
+    disp : float
+        displacement vector (minimum imaged as well)
+    """
+    disp = i_atom - j_atom
+
+    #See if the vector is more than half the box length
+    shift = box * np.round(disp/box)
+    disp -= shift
+
+    return np.sqrt((disp*disp).sum()), disp
+
+def get_angle(xyz, i_atom, j_atom, h_atom, box):
+    """
+    Parameters
+    -----------
+    xyz : np.ndarray
+        contains the coordinates of water molecules
+    i_oxygen : int
+        index of oxygen atom on molecule i
+    j_oxygen : int
+        index of oxygen atom on molecule j
+    h_atom : int
+        index of hydrogen atom that the angle is computed for
+    box : float
+        box dimension
+
+    Returns
+    -----------
+    theta : float
+        computed angle
+    """
+    #Displacement between i_oxygen and the h_atom
+    dist, disp_1 = get_distance(water_xyz[i_oxygen, :], water_xyz[h_atom, :], box)
+    #Displacement between i_oxygen and j_oxygen
+    dist, disp_2 = get_distance(water_xyz[i_oxygen, :], water_xyz[j_oxygen, :], box)
+
+    #Compute cosine as dot product
+    mag_u = np.sqrt((disp_1 * disp_1).sum())
+    mag_v = np.sqrt((disp_2 * disp_2).sum())
+    cosine = ((disp_1 * disp_2).sum()) / mag_u / mag_v
+    
+    if cosine < -0.999999999:
+      theta = 3.14159265359
+    elif cosine > 0.999999999:
+      theta = 0.0
+    else:
+      theta = np.arccos(cosine)
+    theta = theta*180/3.14159265359
+
+    return theta
+
+def check_hbond_criteria(water_xyz, i_oxygen, j_oxygen, box):
+    """
+    Parameters
+    -----------
+    water_xyz : np.ndarray
+        contains the coordinates of water molecules
+    i_oxygen : int
+        index of oxygen atom on molecule i
+    j_oxygen : int
+        index of oxygen atom on molecule j
+    box : float
+        box dimension
+
+    Returns
+    -----------
+    bool
+        Returns True if the hydrogen bond criteria is met, False otherwise
+    """
+
+    #Hydrogens on i_oxygen
+    h1 = i_oxygen + 1
+    h2 = i_oxygen + 2
+    h_atoms = np.asarray([h1, h2])
+
+    #Get distances between hydrogens and j_oxygen
+    dist_1, disp = get_distance(water_xyz[h1, :], water_xyz[j_oxygen, :], box)
+    dist_2, disp = get_distance(water_xyz[h2, :], water_xyz[j_oxygen, :], box)
+    dists = np.asarray([dist_1, dist_2])
+
+    #Find the minimum H-O distance
+    h_min = np.argmin(dists)
+    dist = dists[h_min]
+
+    #Check criteria
+    if dist < 0.245:
+        #Check angle criteria
+        angle = get_angle(water_xyz, i_oxygen, j_oxygen, h_atoms[h_min], box)
+        if angle < 30:
+            return True
+
+    #Hydrogens on j_oxygen
+    h1 = j_oxygen + 1
+    h2 = j_oxygen + 2
+    h_atoms = np.asarray([h1, h2])
+
+    #Get distances between hydrogens and i_oxygen
+    dist_1, disp = get_distance(water_xyz[h1, :], water_xyz[i_oxygen, :], box)
+    dist_2, disp = get_distance(water_xyz[h2, :], water_xyz[i_oxygen, :], box)
+    dists = np.asarray([dist_1, dist_2])
+
+    #Find the minimum H-O distance
+    h_min = np.argmin(dists)
+    dist = dists[h_min]
+    
+    #Check criteria
+    if dist < 0.245:
+        #Check angle criteria
+        angle = get_angle(water_xyz, j_oxygen, i_oxygen, h_atoms[h_min], box)
+        if angle < 30:
+            return True
+
+    return False
+
+def check_criteria(criteria, filtered_atoms, i_mol, i_mol_atoms, j_mol, j_mol_atoms, xyz, traj_filtered):
+    # criteria_bool = np.zeros(len(criteria))
+    # create temp edge list for each criteria
+    chk = True
+    for criterion in criteria:
+        if criterion["distance"] is not None: 
+            i_atom_name, j_atom_name = criterion["name"].split('-')
+            #print(i_mol)
+            i_atom = int(i_mol + i_mol_atoms.index(i_atom_name))
+            j_atom = int(j_mol + j_mol_atoms.index(j_atom_name))
+            #print(f"Evaluating {filtered_atoms[i_atom]}---{filtered_atoms[j_atom]} dist")
+            #if (filtered_atoms[i_atom] != "O") or (filtered_atoms[j_atom] != "O"):
+            #    print("WARNING!!! 1 or more atoms not correctly indexed.")
+            #    print(f"{i_atom_name}, {j_atom_name}")
+            #    print(f"i_mol={i_mol}; i_atom={i_atom}; j_mol={j_mol}; j_atom={j_atom}.")
+            box = traj_filtered.unitcell_lengths[0,0]
+            
+            dist, disp = get_distance(xyz[i_atom], xyz[j_atom], box) 
+            chk_dist = dist < criterion["distance"]
+            
+            chk = True and chk_dist
+            if chk: 
+                print(f"Criteria met, {filtered_atoms[i_atom]}---{filtered_atoms[j_atom]} dist = {dist}!!!")
+        # if criterion["angle"] not None: 
+    # print(criterion)
+        #get_distance(...)
+        #get_angle(...)
+        
+        # create pair list of evaluated pairs, i.e., ["ATOM-ATOM",...]
+        # create unique atom list of atoms evaluated, i.e. ["ATOM", "ATOM", ...]
+        # create list of atom indices from sliced RESATOM list that are in unique atom list 
+        # for i_mol_matched_atoms: 
+            # for j_mol_match_atoms: 
+                # evaluate distance criterion
+                # evaluate angle criterion
+                # update criteria_bool 
+    # if all criteria are true: edges.append(edge)
+    return chk
+
+
 

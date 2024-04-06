@@ -6,7 +6,10 @@ criteria: # list of criteria for network edge
   - name: "O-O" # atom symbols 
     distance: 0.36 # nm 
     angle: None # deg
-  - name: "H-O"
-    distance: 0.245
-    angle: 30.0
+      #  - name: "H1-O"
+      #    distance: 0.245
+      #    angle: 30.0
+      #  - name: "H2-O"
+      #    distance: 0.245
+      #    angle: 30.0
 check_pkl: True # check if edges.pkl exists in code

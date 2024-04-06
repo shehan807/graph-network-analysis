@@ -1,5 +1,7 @@
+import os
 import matplotlib.pyplot as plt
-def plt_metric(metrics):
+import numpy as np
+def plt_metric(metrics, output):
     
     diams = []
     for metric in metrics:
@@ -11,5 +13,4 @@ def plt_metric(metrics):
     plt.xlabel("Diameter Length")
     plt.ylabel("Probability")
 
-    plt.savefig("diam_h3o_water.png")
-
+    plt.savefig(os.path.join(output,"diam_h3o_water.png"))

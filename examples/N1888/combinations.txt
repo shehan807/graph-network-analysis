@@ -1,8 +1,3 @@
-num_cores: 1 # Number of cores/processes for joblib.Parallel 
-num_cells: 10 # Number of cells to divide along each dimension of MD box 
-cutoff: 0.4 # cutoff distance, nm
-residue_name: "OCT" # species for inter-species cluster analysis
-criteria: # list of criteria for network edge
   - name: "C00-C00" # atom symbols
     distance: 0.80 # nm
   - name: "C00-C01" # atom symbols
@@ -1061,4 +1056,3 @@ criteria: # list of criteria for network edge
     distance: 0.80 # nm
   - name: "C0Q-C0Q" # atom symbols
     distance: 0.80 # nm
-check_pkl: True # check if edges.pkl exists in code
