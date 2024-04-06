@@ -36,9 +36,6 @@ def initialize(dcd, pdb, residue_name, num_cells, cutoff):
     traj_filtered = traj.atom_slice(atoms)
     atom_per_res = int(len(atoms) / len(residues))
     xyz = get_xyz(traj, atoms, box, check_coords=True)
-    print(len(xyz))
-    #print(len(xyz[0])/len(residues))
-    
     return xyz, traj, traj_filtered, residues, atoms, num_frames, box, atom_per_res
 def get_atoms(traj, residue_name):
     """Filter out list of indices for residue and respective atoms
@@ -62,7 +59,6 @@ def get_atoms(traj, residue_name):
             residues.append(res.index)
             for atom in res.atoms: 
                 atoms.append(atom.index)
-    #print(f"({len(atoms)/len(residues)}) atoms in residue")
     return residues, atoms
 def get_xyz(traj, atoms, box, check_coords=True):
     """
@@ -80,8 +76,6 @@ def get_xyz(traj, atoms, box, check_coords=True):
     if check_coords: 
         inds_g = np.where(xyz >= box)
         inds_l = np.where(xyz < 0.0)
-        print(f"Found {len(inds_g)} positions greater than box dim.")
-        print(f"Found {len(inds_l)} positions less than box dim.")
         xyz[inds_g] -= box 
         xyz[inds_l] += box
     return xyz
@@ -101,12 +95,7 @@ def make_head(xyz, box, num_cells, cutoff, atom_per_res):
     num_atoms = xyz.shape[0]
 
     head_list = np.zeros(total_cells)
-    #print(f"xyz.shape = {xyz.shape}.")
     linked_list = np.zeros(int(num_atoms / atom_per_res))
-    print(atom_per_res)
-    #print(f"cell length = {cell_length} (cutoff = {cutoff}).")
-    #print(f"head list length = {len(head_list)}")
-    #print(f"linked list length = {len(linked_list)}")
     if cell_length < cutoff: # cell size must be larger than cutoff (i.e., coordination distance)
         warnings.warn("Cell size too small for cutoff!!", UserWarning)
     
@@ -114,13 +103,8 @@ def make_head(xyz, box, num_cells, cutoff, atom_per_res):
         icell = int(xyz[i, 0] / cell_length)\
               + int(xyz[i, 1] / cell_length) * num_cells\
               + int(xyz[i, 2] / cell_length) * num_cells**2
-        #print(f"atom index {iatom} located in cell {icell}")
         linked_list[iatom] = head_list[icell]
-        #print(f"linked_list[{iatom}] = head_list[{icell}] = {head_list[icell]}.")
         head_list[icell] = iatom
-        #print(f"head_list[{icell}] = {iatom}")
-
-
     return head_list, linked_list
 
 def set_cell(ix, iy, iz, num_cells):
@@ -128,6 +112,7 @@ def set_cell(ix, iy, iz, num_cells):
           + (iy + num_cells) % num_cells * num_cells\
           + (iz + num_cells) % num_cells * num_cells**2
     return icell
+
 def make_map(num_cells):
     """...
     Creates cell_map, a list of 13 neighboring cells of each of the small cells in the central box including periodic boundary conditions (i.e., to get all 26 neighbors of a cube).
@@ -144,7 +129,6 @@ def make_map(num_cells):
     total_cells = num_cells*num_cells*num_cells
     map_size = total_cells * 13 
     cell_map = np.zeros(map_size + 0) # exclude (0,0,0) 
-    print(f"Creating cell_map of {len(cell_map)} elements, i.e., 13 for each of the {total_cells} cells.")
     offsets = [(1, 0, 0), (1, 1, 0), (0, 1, 0), (-1, 1, 0),
                (1, 0, -1), (1, 1, -1), (0, 1, -1), (-1, 1, -1),
                (1, 0, 1), (1, 1, 1), (0, 1, 1), (-1, 1, 1),
@@ -154,14 +138,10 @@ def make_map(num_cells):
         for iy in range(0,num_cells+0):
             for ix in range(0,num_cells+0):
                 icell = set_cell(ix, iy, iz, num_cells) * 13
-                #print(f"%%% ({ix},{iy},{iz}) icell = {icell} %%%")
                 for map_index, (dx, dy, dz) in enumerate(offsets): 
                     neighbor_index = set_cell(ix + dx, iy + dy, iz + dz, num_cells)
                     cell_map[icell + map_index + 0] = neighbor_index
-                    #print(f"({ix+dx},{iy+dy},{iz+dz}) icell = {neighbor_index}")
-                    #print(f"cell_map[{icell+map_index+1}]={neighbor_index}")
     return cell_map 
-
 
 def get_distance(i_atom, j_atom, box):
     """
@@ -293,46 +273,44 @@ def check_hbond_criteria(water_xyz, i_oxygen, j_oxygen, box):
     return False
 
 def check_criteria(criteria, filtered_atoms, i_mol, i_mol_atoms, j_mol, j_mol_atoms, xyz, traj_filtered):
-    # criteria_bool = np.zeros(len(criteria))
-    # create temp edge list for each criteria
+    """
+    Parameters
+    ----------
+    criteria : dict
+    filtered_atoms : list
+    i_mol : int
+    i_mol_atoms : list
+    j_mol : int
+    j_mol_atoms : list
+    xyz : list
+
+    Returns: 
+    --------
+    chk : bool
+        boolean for whether criteria is satisfied or not
+    """
+
     chk = False
     for criterion in criteria:
         if criterion["distance"] is not None: 
+            # get names of residue IDs and atoms being evaluated 
             i_atom_name, j_atom_name = criterion["name"].split('-')
-            #print(i_mol)
             i_atom = int(i_mol + i_mol_atoms.index(i_atom_name))
             j_atom = int(j_mol + j_mol_atoms.index(j_atom_name))
-            #print(f"Evaluating {filtered_atoms[i_atom]}---{filtered_atoms[j_atom]} dist")
-            #if (filtered_atoms[i_atom] != "O") or (filtered_atoms[j_atom] != "O"):
-            #    print("WARNING!!! 1 or more atoms not correctly indexed.")
-            #    print(f"{i_atom_name}, {j_atom_name}")
-            #    print(f"i_mol={i_mol}; i_atom={i_atom}; j_mol={j_mol}; j_atom={j_atom}.")
+            
+            # obtain box dimension
             box = traj_filtered.unitcell_lengths[0,0]
             
+            # get distance between i_atom, j_atom
             dist, disp = get_distance(xyz[i_atom], xyz[j_atom], box) 
-            chk_dist = dist < criterion["distance"]
-            if chk_dist:
-                #print(criterion)
-                #print(f"Criteria met, {traj_filtered.topology.atom(i_atom).residue}{filtered_atoms[i_atom]}---{traj_filtered.topology.atom(j_atom).residue}{filtered_atoms[j_atom]} dist = {dist}!!!")
             
+            # check criteria
+            chk_dist = dist < criterion["distance"]
+            # once an atom pair satisfies criteria, the molecules form an edge
+            if chk_dist:
+                #print(f"Criteria met, {traj_filtered.topology.atom(i_atom).residue}{filtered_atoms[i_atom]}---{traj_filtered.topology.atom(j_atom).residue}{filtered_atoms[j_atom]} dist = {dist}!!!")
                 chk = chk_dist
                 break
-            #if chk: 
-            #    print(f"Criteria met, {filtered_atoms[i_atom]}---{filtered_atoms[j_atom]} dist = {dist}!!!")
-        # if criterion["angle"] not None: 
-    # print(criterion)
-        #get_distance(...)
-        #get_angle(...)
-        
-        # create pair list of evaluated pairs, i.e., ["ATOM-ATOM",...]
-        # create unique atom list of atoms evaluated, i.e. ["ATOM", "ATOM", ...]
-        # create list of atom indices from sliced RESATOM list that are in unique atom list 
-        # for i_mol_matched_atoms: 
-            # for j_mol_match_atoms: 
-                # evaluate distance criterion
-                # evaluate angle criterion
-                # update criteria_bool 
-    # if all criteria are true: edges.append(edge)
     return chk
 
 
