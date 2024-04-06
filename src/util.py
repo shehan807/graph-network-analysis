@@ -295,7 +295,7 @@ def check_hbond_criteria(water_xyz, i_oxygen, j_oxygen, box):
 def check_criteria(criteria, filtered_atoms, i_mol, i_mol_atoms, j_mol, j_mol_atoms, xyz, traj_filtered):
     # criteria_bool = np.zeros(len(criteria))
     # create temp edge list for each criteria
-    chk = True
+    chk = False
     for criterion in criteria:
         if criterion["distance"] is not None: 
             i_atom_name, j_atom_name = criterion["name"].split('-')
@@ -311,10 +311,14 @@ def check_criteria(criteria, filtered_atoms, i_mol, i_mol_atoms, j_mol, j_mol_at
             
             dist, disp = get_distance(xyz[i_atom], xyz[j_atom], box) 
             chk_dist = dist < criterion["distance"]
+            if chk_dist:
+                #print(criterion)
+                #print(f"Criteria met, {traj_filtered.topology.atom(i_atom).residue}{filtered_atoms[i_atom]}---{traj_filtered.topology.atom(j_atom).residue}{filtered_atoms[j_atom]} dist = {dist}!!!")
             
-            chk = True and chk_dist
-            if chk: 
-                print(f"Criteria met, {filtered_atoms[i_atom]}---{filtered_atoms[j_atom]} dist = {dist}!!!")
+                chk = chk_dist
+                break
+            #if chk: 
+            #    print(f"Criteria met, {filtered_atoms[i_atom]}---{filtered_atoms[j_atom]} dist = {dist}!!!")
         # if criterion["angle"] not None: 
     # print(criterion)
         #get_distance(...)
