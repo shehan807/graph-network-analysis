@@ -35,6 +35,7 @@ def plt_metric(metrics, output):
     for metric in metrics:
         for m in metric: diams.append(m)
 
+    print(len(diams))
     weights = np.ones_like(diams)/float(len(diams))
     hist, edges, p = plt.hist(diams, weights=weights, bins=40, alpha=0.5, color='midnightblue',label='N1888+')
     #plt.legend()

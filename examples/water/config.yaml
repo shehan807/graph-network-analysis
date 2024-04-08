@@ -5,6 +5,7 @@ residue_name: "HOH" # species for inter-species cluster analysis
 criteria: # list of criteria for network edge
   - name: "O-O" # atom symbols 
     distance: 0.36 # nm 
+    min_true: 1
     angle: None # deg
       #  - name: "H1-O"
       #    distance: 0.245

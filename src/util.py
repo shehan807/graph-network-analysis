@@ -1,9 +1,10 @@
 import mdtraj as md
-import sys
+import os, sys
 import numpy as np
 import warnings
+import pickle 
 
-def initialize(dcd, pdb, residue_name, num_cells, cutoff):
+def initialize(dcd, pdb, out, residue_name, num_cells, cutoff):
     """Initializes parameters for networkx functions.
     Parameters
     ----------
@@ -33,10 +34,22 @@ def initialize(dcd, pdb, residue_name, num_cells, cutoff):
     num_frames = len(traj) 
     box = traj.unitcell_lengths[0,0]
     residues, atoms = get_atoms(traj, residue_name)
-    traj_filtered = traj.atom_slice(atoms)
+   
+    # limit traj object slicing 
+    trj_fil_file = os.path.join(out, "trj_filtered.pkl")
+    if os.path.isfile(trj_fil_file):
+        with open(trj_fil_file, "rb") as file:
+            traj_filtered = pickle.load(file)
+    else: 
+        traj_filtered = traj.atom_slice(atoms)
+        with open(trj_fil_file, "wb") as file: 
+            pickle.dump(traj_filtered, file)
+
+    res_atoms = list(traj_filtered.topology.atoms)
     atom_per_res = int(len(atoms) / len(residues))
     xyz = get_xyz(traj, atoms, box, check_coords=True)
     return xyz, traj, traj_filtered, residues, atoms, num_frames, box, atom_per_res
+
 def get_atoms(traj, residue_name):
     """Filter out list of indices for residue and respective atoms
     Parameters
@@ -60,6 +73,7 @@ def get_atoms(traj, residue_name):
             for atom in res.atoms: 
                 atoms.append(atom.index)
     return residues, atoms
+
 def get_xyz(traj, atoms, box, check_coords=True):
     """
     Parameters
@@ -105,9 +119,6 @@ def make_head(xyz, box, num_cells, cutoff, atom_per_res):
               + int(xyz[i, 2] / cell_length) * num_cells**2
         linked_list[iatom] = head_list[icell]
         head_list[icell] = iatom
-        #with open("headlist.txt","a") as hl:
-        #    hl.writelines(f"head_list[{icell+1}] = {iatom}\n")
-        #print(f"head_list[{icell}] = {iatom}")
     return head_list, linked_list
 
 def set_cell(ix, iy, iz, num_cells):
@@ -165,11 +176,9 @@ def get_distance(i_atom, j_atom, box):
         displacement vector (minimum imaged as well)
     """
     disp = i_atom - j_atom
-
     #See if the vector is more than half the box length
     shift = box * np.round(disp/box)
     disp -= shift
-
     return np.sqrt((disp*disp).sum()), disp
 
 def get_angle(xyz, i_atom, j_atom, h_atom, box):
@@ -275,7 +284,7 @@ def check_hbond_criteria(water_xyz, i_oxygen, j_oxygen, box):
 
     return False
 
-def check_criteria(criteria, filtered_atoms, i_mol, i_mol_atoms, j_mol, j_mol_atoms, xyz, traj_filtered):
+def check_criteria(criteria, filtered_atoms, i_mol, i_mol_atom_ind, i_mol_atoms, j_mol, j_mol_atom_ind, j_mol_atoms, xyz, traj_filtered):
     """
     Parameters
     ----------
@@ -294,27 +303,35 @@ def check_criteria(criteria, filtered_atoms, i_mol, i_mol_atoms, j_mol, j_mol_at
     """
 
     chk = False # NOTE: this could be a source of some issue
+    dist_pairs = []
     for criterion in criteria:
         if criterion["distance"] is not None: 
             # get names of residue IDs and atoms being evaluated 
             i_atom_name, j_atom_name = criterion["name"].split('-')
-            i_atom = int(i_mol + i_mol_atoms.index(i_atom_name))
-            j_atom = int(j_mol + j_mol_atoms.index(j_atom_name))
+            i_atom = int(i_mol_atom_ind + i_mol_atoms.index(i_atom_name))
+            j_atom = int(j_mol_atom_ind + j_mol_atoms.index(j_atom_name))
             
+            dist_pairs.append([i_atom, j_atom])
             # obtain box dimension
-            box = traj_filtered.unitcell_lengths[0,0]
-            
-            # get distance between i_atom, j_atom
-            dist, disp = get_distance(xyz[i_atom], xyz[j_atom], box) 
-            
-            # check criteria
-            chk_dist = dist < criterion["distance"]
-            # once an atom pair satisfies criteria, the molecules form an edge
-            if chk_dist:
-                #print(f"Criteria met, {traj_filtered.topology.atom(i_atom).residue}{filtered_atoms[i_atom]}---{traj_filtered.topology.atom(j_atom).residue}{filtered_atoms[j_atom]} dist = {dist}!!!")
-                chk = chk_dist
-                #break
+            # box = traj_filtered.unitcell_lengths[0,0]
+    #print("dist_pairs")
+    #print(dist_pairs)
+
+    # get distance between i_atom, j_atom
+    dist = md.compute_distances(traj_filtered, dist_pairs) 
+    #print(dist)
+    
+    # check criteria
+    dist_cri_chks = np.sum(dist < criterion["distance"])
+    chk_dist = dist_cri_chks >= criterion["min_true"] 
+    #print("checking criterion")
+    #print(dist < criterion["distance"])
+    #print(chk_dist)
+    # once an atom pair satisfies criteria, the molecules form an edge
+    if chk_dist:
+        #print(f"Criteria met!")
+        #print(f"Criteria met {traj_filtered.topology.atom(i_atom)}---{traj_filtered.topology.atom(j_atom)} dist = {dist}!!!")
+        #print(dist_pairs)
+        #print(dist)
+        chk = chk_dist or chk
     return chk
-
-
-
