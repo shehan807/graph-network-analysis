@@ -7,6 +7,6 @@ for i in "${values[@]}"; do
     for j in "${values[@]}"; do
         # Print the configuration lines for each pair
         echo "  - name: \"$i-$j\" # atom symbols" >> "$outfile"
-        echo "    distance: 0.80 # nm" >> "$outfile"
+        echo "    distance: 0.70 # nm" >> "$outfile"
     done
 done

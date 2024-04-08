@@ -34,7 +34,10 @@ def compute_metric(graph):
     """
     # compute diameter of the cluster here
     diam_water = []
+    #print("%%% computing metric %%%")
     for cl in nx.connected_components(graph):
+        #print(cl)
+        #print(nx.diameter(graph.subgraph(cl)))
         diam_water.append(nx.diameter(graph.subgraph(cl)))
     return diam_water
 
@@ -76,10 +79,15 @@ def get_network(xyz, box, num_cells, cutoff, frame, atom_per_res, residues, atom
     for i in range(total_cells):
         i_mol = head_list[i] # access initial molecule from head list 
         #Some cells won't have a molecule, so only need to loop through the cell if i_mol isn't 0
-        while i_mol > 0: # follow trail of link-list references until element is zero
+        i_mol_cond = True
+        while i_mol_cond: # follow trail of link-list references until element is zero
+            if i_mol == 0: i_mol_cond = False
             #Get the linked j_atom from linked_list
             j_mol = linked_list[int(i_mol)]
-            while j_mol > 0:
+            j_mol_cond = True
+            while j_mol_cond:
+                if j_mol == 0: j_mol_cond = False
+                if (i_mol == 0) and (j_mol == 0): continue
                 
                 # index of atom from i_mol and j_mol 
                 i_mol_atom_ind = int(i_mol*atom_per_res) 
@@ -90,6 +98,9 @@ def get_network(xyz, box, num_cells, cutoff, frame, atom_per_res, residues, atom
                 j_mol_atoms = filtered_atoms[i_mol_atom_ind:i_mol_atom_ind+atom_per_res]
                 
                 # check all criteria
+                #print(int(i_mol), int(j_mol))
+                if (int(i_mol) == 0) and (int(j_mol) == 118):
+                    print("FOUND BUG, JUST DOESNT MEET CRITERIA!!!")
                 if check_criteria(criteria, filtered_atoms, i_mol_atom_ind, i_mol_atoms, j_mol_atom_ind, j_mol_atoms, xyz, traj_filtered): edges.append((int(i_mol), int(j_mol)))
                 j_mol = linked_list[int(j_mol)]
         
@@ -97,12 +108,14 @@ def get_network(xyz, box, num_cells, cutoff, frame, atom_per_res, residues, atom
             jcell0 = i*13 # double check that this is correct, should be...
             for neighbor in range(13):
                 jcell = int(cell_map[jcell0 + neighbor])
-                
+                #print(f'cell_map[{jcell}+{neighbor}] = {jcell}')
                 # head molecule index of jcell 
                 j_mol = head_list[jcell]
                 
-                while j_mol > 0: 
-                    
+                j_mol_cond = True
+                while j_mol_cond: 
+                    if j_mol == 0: j_mol_cond = False
+                    if (i_mol == 0) and (j_mol == 0): continue
                     # index of atom from i_mol and j_mol
                     i_mol_atom_ind = int(i_mol*atom_per_res) 
                     j_mol_atom_ind = int(j_mol*atom_per_res) 
@@ -111,6 +124,10 @@ def get_network(xyz, box, num_cells, cutoff, frame, atom_per_res, residues, atom
                     i_mol_atoms = filtered_atoms[i_mol_atom_ind:i_mol_atom_ind+atom_per_res]
                     j_mol_atoms = filtered_atoms[i_mol_atom_ind:i_mol_atom_ind+atom_per_res]
                     # check all criteria again
+                    #with open("neigh_edges.txt","a") as ne:
+                    #    ne.writelines(str((int(i_mol), int(j_mol))) + "\n")
+                    #if (int(i_mol) == 0) and (int(j_mol) == 118):
+                    #    print("FOUND BUG, JUST DOESNT MEET CRITERIA!!!")
                     if check_criteria(criteria, filtered_atoms, i_mol_atom_ind, i_mol_atoms, j_mol_atom_ind, j_mol_atoms, xyz, traj_filtered): edges.append((int(i_mol), int(j_mol)))
 
                     #See if there's an atom linked to j_mol

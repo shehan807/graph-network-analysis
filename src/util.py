@@ -105,6 +105,9 @@ def make_head(xyz, box, num_cells, cutoff, atom_per_res):
               + int(xyz[i, 2] / cell_length) * num_cells**2
         linked_list[iatom] = head_list[icell]
         head_list[icell] = iatom
+        #with open("headlist.txt","a") as hl:
+        #    hl.writelines(f"head_list[{icell+1}] = {iatom}\n")
+        #print(f"head_list[{icell}] = {iatom}")
     return head_list, linked_list
 
 def set_cell(ix, iy, iz, num_cells):
@@ -290,7 +293,7 @@ def check_criteria(criteria, filtered_atoms, i_mol, i_mol_atoms, j_mol, j_mol_at
         boolean for whether criteria is satisfied or not
     """
 
-    chk = False
+    chk = False # NOTE: this could be a source of some issue
     for criterion in criteria:
         if criterion["distance"] is not None: 
             # get names of residue IDs and atoms being evaluated 
@@ -310,7 +313,7 @@ def check_criteria(criteria, filtered_atoms, i_mol, i_mol_atoms, j_mol, j_mol_at
             if chk_dist:
                 #print(f"Criteria met, {traj_filtered.topology.atom(i_atom).residue}{filtered_atoms[i_atom]}---{traj_filtered.topology.atom(j_atom).residue}{filtered_atoms[j_atom]} dist = {dist}!!!")
                 chk = chk_dist
-                break
+                #break
     return chk
 
 

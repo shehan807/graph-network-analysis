@@ -25,6 +25,7 @@ def main():
     dcd = Path(args.dcd_file)
     pdb = Path(args.pdb_file)
     out = Path(args.output_directory)
+    if not os.path.exists(out): os.makedirs(out)
     
     # obtain config.yaml variables
     num_cores = config["num_cores"]
@@ -33,16 +34,22 @@ def main():
     residue_name = config["residue_name"]
     criteria = config["criteria"]
     check_pkl = config["check_pkl"]
+    
 
     # obtain network prerequisites
     xyz, traj, traj_filtered, residues, atoms, num_frames, box, atom_per_res = util.initialize(dcd, pdb, residue_name, num_cells, cutoff)
-    
+    res_index = [i for i in range(len(residues))]
+    #num_frames = 1 
     # obtain edges 
     #if os.environ["MULTINODE"] == True:
     #    pass
     #else:
     edges = Parallel(n_jobs=num_cores,backend="multiprocessing")(delayed(get_network)(xyz[frame], box, num_cells, cutoff, frame, atom_per_res, residues, atoms, traj, traj_filtered, criteria) for frame in range(num_frames))
     pickle.dump(edges, open(os.path.join(out,"edges.pkl"), "wb"))
+    
+    with open("edges.txt", "w") as etxt:
+        for edge in edges[0]:
+            etxt.writelines(str(edge)+"\n")
 
     # save or load contents of edges for later use
     # edges = pickle.load(open(os.path.join(out,"edges.pkl"), "rb"))
@@ -50,19 +57,23 @@ def main():
     # use edges obtained from get_network, add to a NetworkX graph object
     graphs = []
     for edge in edges:
-        res_index = [i for i in range(len(residues))]
         graph = make_graph(edge, res_index)
         graphs.append(graph)
-    
+     
+    print(f"graph len: {len(graphs)}")
     # use the formed graphs to compute graph properties
-    diams = Parallel(n_jobs=num_cores,backend="multiprocessing")(
+    diams = Parallel(n_jobs=1,backend="multiprocessing")(
             delayed(
                 ###Change the "compute_metric" function here if you want to compute a different property
                 compute_metric
                 )(graphs[frame]) for frame in range(len(graphs)))
+   
     
+    with open("diam.txt", "w") as dtxt:
+        for diam in diams: 
+            #for d in diam: 
+            dtxt.writelines(str(diam)+"\n")
     # change this function depending on which metric you want to plot or analyze
-    if not os.path.exists(out): os.makedirs(out)
     visualization.plt_metric(diams, out)
 
 if __name__ == "__main__":
