@@ -3,6 +3,7 @@ import os, sys
 import numpy as np
 import warnings
 import pickle 
+from copy import deepcopy 
 
 def initialize(dcd, pdb, out, residue_name, num_cells, cutoff):
     """Initializes parameters for networkx functions.
@@ -301,7 +302,7 @@ def check_criteria(criteria, filtered_atoms, i_mol, i_mol_atom_ind, i_mol_atoms,
     chk : bool
         boolean for whether criteria is satisfied or not
     """
-
+    
     chk = False # NOTE: this could be a source of some issue
     dist_pairs = []
     for criterion in criteria:
@@ -312,26 +313,15 @@ def check_criteria(criteria, filtered_atoms, i_mol, i_mol_atom_ind, i_mol_atoms,
             j_atom = int(j_mol_atom_ind + j_mol_atoms.index(j_atom_name))
             
             dist_pairs.append([i_atom, j_atom])
-            # obtain box dimension
-            # box = traj_filtered.unitcell_lengths[0,0]
-    #print("dist_pairs")
-    #print(dist_pairs)
 
     # get distance between i_atom, j_atom
     dist = md.compute_distances(traj_filtered, dist_pairs) 
-    #print(dist)
     
     # check criteria
     dist_cri_chks = np.sum(dist < criterion["distance"])
     chk_dist = dist_cri_chks >= criterion["min_true"] 
-    #print("checking criterion")
-    #print(dist < criterion["distance"])
-    #print(chk_dist)
+    
     # once an atom pair satisfies criteria, the molecules form an edge
     if chk_dist:
-        #print(f"Criteria met!")
-        #print(f"Criteria met {traj_filtered.topology.atom(i_atom)}---{traj_filtered.topology.atom(j_atom)} dist = {dist}!!!")
-        #print(dist_pairs)
-        #print(dist)
         chk = chk_dist or chk
     return chk

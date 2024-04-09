@@ -38,13 +38,13 @@ def main():
     # obtain network prerequisites
     xyz, traj, traj_filtered, residues, atoms, num_frames, box, atom_per_res = util.initialize(dcd, pdb, out, residue_name, num_cells, cutoff)
     res_index = [i for i in range(len(residues))]
-    #num_frames = 1 
+    num_frames = 10 
     # obtain edges 
     #if os.environ["MULTINODE"] == True:
     #    pass
     #else:
     start = time.time()
-    edges = Parallel(n_jobs=num_cores,backend="multiprocessing")(delayed(get_network)(xyz[frame], box, num_cells, cutoff, frame, atom_per_res, residues, atoms, traj, traj_filtered, criteria) for frame in range(num_frames))
+    edges = Parallel(n_jobs=num_cores,backend="multiprocessing")(delayed(get_network)(xyz[frame], box, num_cells, cutoff, frame, atom_per_res, residues, atoms, traj, out, criteria) for frame in range(num_frames))
     end = time.time()
     total_time = (end - start) / 60 
     print(f"{num_frames} frames took {total_time:0.2f} min")
@@ -61,7 +61,7 @@ def main():
         graphs.append(graph)
      
     # use the formed graphs to compute graph properties
-    diams = Parallel(n_jobs=1,backend="multiprocessing")(
+    diams = Parallel(n_jobs=num_cores,backend="multiprocessing")(
             delayed(
                 ###Change the "compute_metric" function here if you want to compute a different property
                 compute_metric

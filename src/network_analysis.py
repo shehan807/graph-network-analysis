@@ -36,13 +36,11 @@ def compute_metric(graph):
     diam_water = []
     clusters = [c for c in sorted(nx.connected_components(graph),key=len,reverse=True)]
     clusters_lengths = [len(c) for c in sorted(nx.connected_components(graph),key=len,reverse=True)]
-    print(f"found {len(clusters)} connected components")
-    print(f"{clusters_lengths}")
     for cluster in nx.connected_components(graph):
         diam_water.append(nx.diameter(graph.subgraph(cluster)))
     return diam_water
 
-def get_network(xyz, box, num_cells, cutoff, frame, atom_per_res, residues, atoms, traj, traj_filtered, criteria):
+def get_network(xyz, box, num_cells, cutoff, frame, atom_per_res, residues, atoms, traj, out, criteria):
     """
     Parameters
     ----------
@@ -70,6 +68,17 @@ def get_network(xyz, box, num_cells, cutoff, frame, atom_per_res, residues, atom
         dictionary of criteria read in from config.yaml
     """
     print(f"processing frame {frame}")
+    
+    # because traj_filtered is read_only, joblib.Parallel can only work this way
+    trj_fil_file = os.path.join(out, "trj_filtered.pkl")
+    if os.path.isfile(trj_fil_file):
+        with open(trj_fil_file, "rb") as file:
+            traj_filtered = pickle.load(file)
+    else: 
+        traj_filtered = traj.atom_slice(atoms)
+        with open(trj_fil_file, "wb") as file: 
+            pickle.dump(traj_filtered, file)
+
     head_list, linked_list = make_head(xyz, box, num_cells, cutoff, atom_per_res)
     cell_map = make_map(num_cells)
     total_cells = num_cells*num_cells*num_cells 

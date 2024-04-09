@@ -1,1593 +1,1593 @@
-num_cores: 1 # Number of cores/processes for joblib.Parallel
+num_cores: 6 # Number of cores/processes for joblib.Parallel
 num_cells: 10 # Number of cells to divide along each dimension of MD box
 cutoff: 0.4 # cutoff distance, nm
 residue_name: "OCT" # species for inter-species cluster analysis
 criteria: # list of criteria for network edge
   - name: "C00-C00" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C00-C01" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C00-C03" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C00-C04" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C00-C05" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C00-C06" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C00-C07" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C00-C09" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C00-C0A" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C00-C0B" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C00-C0C" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C00-C0D" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C00-C0E" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C00-C0F" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C00-C0G" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C00-C0I" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C00-C0J" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C00-C0K" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C00-C0M" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C00-C0N" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C00-C0O" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C00-C0P" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C00-C0Q" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C01-C00" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C01-C01" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C01-C03" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C01-C04" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C01-C05" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C01-C06" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C01-C07" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C01-C09" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C01-C0A" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C01-C0B" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C01-C0C" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C01-C0D" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C01-C0E" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C01-C0F" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C01-C0G" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C01-C0I" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C01-C0J" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C01-C0K" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C01-C0M" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C01-C0N" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C01-C0O" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C01-C0P" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C01-C0Q" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C03-C00" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C03-C01" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C03-C03" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C03-C04" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C03-C05" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C03-C06" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C03-C07" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C03-C09" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C03-C0A" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C03-C0B" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C03-C0C" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C03-C0D" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C03-C0E" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C03-C0F" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C03-C0G" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C03-C0I" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C03-C0J" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C03-C0K" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C03-C0M" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C03-C0N" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C03-C0O" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C03-C0P" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C03-C0Q" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C04-C00" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C04-C01" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C04-C03" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C04-C04" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C04-C05" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C04-C06" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C04-C07" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C04-C09" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C04-C0A" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C04-C0B" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C04-C0C" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C04-C0D" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C04-C0E" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C04-C0F" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C04-C0G" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C04-C0I" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C04-C0J" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C04-C0K" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C04-C0M" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C04-C0N" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C04-C0O" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C04-C0P" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C04-C0Q" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C05-C00" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C05-C01" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C05-C03" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C05-C04" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C05-C05" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C05-C06" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C05-C07" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C05-C09" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C05-C0A" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C05-C0B" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C05-C0C" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C05-C0D" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C05-C0E" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C05-C0F" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C05-C0G" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C05-C0I" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C05-C0J" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C05-C0K" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C05-C0M" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C05-C0N" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C05-C0O" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C05-C0P" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C05-C0Q" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C06-C00" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C06-C01" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C06-C03" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C06-C04" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C06-C05" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C06-C06" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C06-C07" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C06-C09" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C06-C0A" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C06-C0B" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C06-C0C" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C06-C0D" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C06-C0E" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C06-C0F" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C06-C0G" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C06-C0I" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C06-C0J" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C06-C0K" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C06-C0M" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C06-C0N" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C06-C0O" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C06-C0P" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C06-C0Q" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C07-C00" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C07-C01" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C07-C03" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C07-C04" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C07-C05" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C07-C06" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C07-C07" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C07-C09" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C07-C0A" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C07-C0B" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C07-C0C" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C07-C0D" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C07-C0E" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C07-C0F" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C07-C0G" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C07-C0I" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C07-C0J" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C07-C0K" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C07-C0M" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C07-C0N" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C07-C0O" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C07-C0P" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C07-C0Q" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C09-C00" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C09-C01" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C09-C03" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C09-C04" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C09-C05" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C09-C06" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C09-C07" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C09-C09" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C09-C0A" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C09-C0B" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C09-C0C" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C09-C0D" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C09-C0E" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C09-C0F" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C09-C0G" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C09-C0I" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C09-C0J" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C09-C0K" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C09-C0M" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C09-C0N" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C09-C0O" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C09-C0P" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C09-C0Q" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0A-C00" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0A-C01" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0A-C03" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0A-C04" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0A-C05" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0A-C06" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0A-C07" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0A-C09" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0A-C0A" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0A-C0B" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0A-C0C" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0A-C0D" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0A-C0E" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0A-C0F" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0A-C0G" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0A-C0I" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0A-C0J" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0A-C0K" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0A-C0M" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0A-C0N" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0A-C0O" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0A-C0P" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0A-C0Q" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0B-C00" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0B-C01" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0B-C03" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0B-C04" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0B-C05" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0B-C06" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0B-C07" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0B-C09" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0B-C0A" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0B-C0B" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0B-C0C" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0B-C0D" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0B-C0E" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0B-C0F" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0B-C0G" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0B-C0I" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0B-C0J" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0B-C0K" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0B-C0M" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0B-C0N" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0B-C0O" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0B-C0P" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0B-C0Q" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0C-C00" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0C-C01" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0C-C03" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0C-C04" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0C-C05" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0C-C06" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0C-C07" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0C-C09" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0C-C0A" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0C-C0B" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0C-C0C" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0C-C0D" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0C-C0E" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0C-C0F" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0C-C0G" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0C-C0I" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0C-C0J" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0C-C0K" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0C-C0M" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0C-C0N" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0C-C0O" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0C-C0P" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0C-C0Q" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0D-C00" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0D-C01" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0D-C03" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0D-C04" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0D-C05" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0D-C06" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0D-C07" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0D-C09" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0D-C0A" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0D-C0B" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0D-C0C" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0D-C0D" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0D-C0E" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0D-C0F" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0D-C0G" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0D-C0I" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0D-C0J" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0D-C0K" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0D-C0M" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0D-C0N" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0D-C0O" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0D-C0P" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0D-C0Q" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0E-C00" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0E-C01" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0E-C03" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0E-C04" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0E-C05" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0E-C06" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0E-C07" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0E-C09" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0E-C0A" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0E-C0B" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0E-C0C" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0E-C0D" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0E-C0E" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0E-C0F" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0E-C0G" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0E-C0I" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0E-C0J" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0E-C0K" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0E-C0M" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0E-C0N" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0E-C0O" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0E-C0P" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0E-C0Q" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0F-C00" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0F-C01" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0F-C03" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0F-C04" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0F-C05" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0F-C06" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0F-C07" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0F-C09" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0F-C0A" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0F-C0B" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0F-C0C" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0F-C0D" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0F-C0E" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0F-C0F" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0F-C0G" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0F-C0I" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0F-C0J" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0F-C0K" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0F-C0M" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0F-C0N" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0F-C0O" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0F-C0P" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0F-C0Q" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0G-C00" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0G-C01" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0G-C03" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0G-C04" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0G-C05" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0G-C06" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0G-C07" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0G-C09" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0G-C0A" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0G-C0B" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0G-C0C" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0G-C0D" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0G-C0E" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0G-C0F" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0G-C0G" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0G-C0I" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0G-C0J" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0G-C0K" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0G-C0M" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0G-C0N" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0G-C0O" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0G-C0P" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0G-C0Q" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0I-C00" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0I-C01" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0I-C03" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0I-C04" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0I-C05" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0I-C06" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0I-C07" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0I-C09" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0I-C0A" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0I-C0B" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0I-C0C" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0I-C0D" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0I-C0E" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0I-C0F" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0I-C0G" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0I-C0I" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0I-C0J" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0I-C0K" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0I-C0M" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0I-C0N" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0I-C0O" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0I-C0P" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0I-C0Q" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0J-C00" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0J-C01" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0J-C03" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0J-C04" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0J-C05" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0J-C06" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0J-C07" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0J-C09" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0J-C0A" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0J-C0B" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0J-C0C" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0J-C0D" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0J-C0E" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0J-C0F" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0J-C0G" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0J-C0I" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0J-C0J" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0J-C0K" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0J-C0M" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0J-C0N" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0J-C0O" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0J-C0P" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0J-C0Q" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0K-C00" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0K-C01" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0K-C03" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0K-C04" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0K-C05" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0K-C06" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0K-C07" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0K-C09" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0K-C0A" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0K-C0B" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0K-C0C" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0K-C0D" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0K-C0E" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0K-C0F" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0K-C0G" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0K-C0I" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0K-C0J" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0K-C0K" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0K-C0M" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0K-C0N" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0K-C0O" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0K-C0P" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0K-C0Q" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0M-C00" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0M-C01" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0M-C03" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0M-C04" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0M-C05" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0M-C06" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0M-C07" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0M-C09" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0M-C0A" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0M-C0B" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0M-C0C" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0M-C0D" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0M-C0E" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0M-C0F" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0M-C0G" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0M-C0I" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0M-C0J" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0M-C0K" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0M-C0M" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0M-C0N" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0M-C0O" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0M-C0P" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0M-C0Q" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0N-C00" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0N-C01" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0N-C03" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0N-C04" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0N-C05" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0N-C06" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0N-C07" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0N-C09" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0N-C0A" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0N-C0B" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0N-C0C" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0N-C0D" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0N-C0E" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0N-C0F" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0N-C0G" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0N-C0I" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0N-C0J" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0N-C0K" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0N-C0M" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0N-C0N" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0N-C0O" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0N-C0P" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0N-C0Q" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0O-C00" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0O-C01" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0O-C03" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0O-C04" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0O-C05" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0O-C06" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0O-C07" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0O-C09" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0O-C0A" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0O-C0B" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0O-C0C" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0O-C0D" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0O-C0E" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0O-C0F" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0O-C0G" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0O-C0I" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0O-C0J" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0O-C0K" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0O-C0M" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0O-C0N" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0O-C0O" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0O-C0P" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0O-C0Q" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0P-C00" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0P-C01" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0P-C03" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0P-C04" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0P-C05" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0P-C06" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0P-C07" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0P-C09" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0P-C0A" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0P-C0B" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0P-C0C" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0P-C0D" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0P-C0E" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0P-C0F" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0P-C0G" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0P-C0I" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0P-C0J" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0P-C0K" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0P-C0M" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0P-C0N" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0P-C0O" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0P-C0P" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0P-C0Q" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0Q-C00" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0Q-C01" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0Q-C03" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0Q-C04" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0Q-C05" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0Q-C06" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0Q-C07" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0Q-C09" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0Q-C0A" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0Q-C0B" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0Q-C0C" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0Q-C0D" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0Q-C0E" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0Q-C0F" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0Q-C0G" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0Q-C0I" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0Q-C0J" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0Q-C0K" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0Q-C0M" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0Q-C0N" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0Q-C0O" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0Q-C0P" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
   - name: "C0Q-C0Q" # atom symbols
-    distance: 0.40 # nm
+    distance: 0.45 # nm
     min_true: 2 
 check_pkl: True # check if edges.pkl exists in code
