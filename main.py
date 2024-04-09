@@ -7,6 +7,7 @@ from src.network_analysis import *
 from joblib import Parallel, delayed 
 import time
 import pickle
+import logging
 
 def main():
     parser = argparse.ArgumentParser(description="Graph Network Analysis for Molecular Dynamics Trajectories")
@@ -27,6 +28,9 @@ def main():
     out = Path(args.output_directory)
     if not os.path.exists(out): os.makedirs(out)
     
+    # configure logging in python 
+    logging.basicConfig(filename=os.path.join(out,'summary.out'),level=logging.DEBUG, format='%(levelname)s : %(message)s', filemode='w')
+
     # obtain config.yaml variables
     num_cores = config["num_cores"]
     num_cells = config["num_cells"]
@@ -38,6 +42,8 @@ def main():
     # obtain network prerequisites
     xyz, traj, traj_filtered, residues, atoms, num_frames, box, atom_per_res = util.initialize(dcd, pdb, out, residue_name, num_cells, cutoff)
     res_index = [i for i in range(len(residues))]
+    logging.info("%d %s residues found.", len(res_index), residue_name)
+
     num_frames = 10 
     # obtain edges 
     #if os.environ["MULTINODE"] == True:
@@ -47,7 +53,8 @@ def main():
     edges = Parallel(n_jobs=num_cores,backend="multiprocessing")(delayed(get_network)(xyz[frame], box, num_cells, cutoff, frame, atom_per_res, residues, atoms, traj, out, criteria) for frame in range(num_frames))
     end = time.time()
     total_time = (end - start) / 60 
-    print(f"{num_frames} frames took {total_time:0.2f} min")
+    logging.info("%d frames took %.2f min", num_frames, total_time)
+    logging.info("edges:\n%s", edges)
 
     pickle.dump(edges, open(os.path.join(out,"edges.pkl"), "wb"))
     

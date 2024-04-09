@@ -1,4 +1,4 @@
-num_cores: 6 # Number of cores/processes for joblib.Parallel
+num_cores: 1 # Number of cores/processes for joblib.Parallel
 num_cells: 10 # Number of cells to divide along each dimension of MD box
 cutoff: 0.4 # cutoff distance, nm
 residue_name: "OCT" # species for inter-species cluster analysis

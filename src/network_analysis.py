@@ -1,6 +1,7 @@
 from src.util import *  
 import networkx as nx
 import pickle
+import logging 
 
 def make_graph(edge, res_index):
     """
@@ -33,12 +34,15 @@ def compute_metric(graph):
         List of each graph cluster diameter
     """
     # compute diameter of the cluster here
-    diam_water = []
+    diam = []
     clusters = [c for c in sorted(nx.connected_components(graph),key=len,reverse=True)]
     clusters_lengths = [len(c) for c in sorted(nx.connected_components(graph),key=len,reverse=True)]
+    logging.info("Found %d clusters (covering %d total nodes/molecules)",len(clusters), sum(clusters_lengths))
+    logging.info("cluster_lengths list = %s",clusters_lengths)
+
     for cluster in nx.connected_components(graph):
-        diam_water.append(nx.diameter(graph.subgraph(cluster)))
-    return diam_water
+        diam.append(nx.diameter(graph.subgraph(cluster)))
+    return diam
 
 def get_network(xyz, box, num_cells, cutoff, frame, atom_per_res, residues, atoms, traj, out, criteria):
     """

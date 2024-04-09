@@ -4,6 +4,7 @@ import numpy as np
 import warnings
 import pickle 
 from copy import deepcopy 
+import logging
 
 def initialize(dcd, pdb, out, residue_name, num_cells, cutoff):
     """Initializes parameters for networkx functions.
@@ -42,6 +43,7 @@ def initialize(dcd, pdb, out, residue_name, num_cells, cutoff):
         with open(trj_fil_file, "rb") as file:
             traj_filtered = pickle.load(file)
     else: 
+        logging.debug("No filtered trajectory pkl file exists, creating one now.")
         traj_filtered = traj.atom_slice(atoms)
         with open(trj_fil_file, "wb") as file: 
             pickle.dump(traj_filtered, file)
@@ -49,6 +51,8 @@ def initialize(dcd, pdb, out, residue_name, num_cells, cutoff):
     res_atoms = list(traj_filtered.topology.atoms)
     atom_per_res = int(len(atoms) / len(residues))
     xyz = get_xyz(traj, atoms, box, check_coords=True)
+    logging.debug("Produced trajectory length of %d for %d atoms.",len(xyz), len(atoms))
+
     return xyz, traj, traj_filtered, residues, atoms, num_frames, box, atom_per_res
 
 def get_atoms(traj, residue_name):
@@ -305,6 +309,7 @@ def check_criteria(criteria, filtered_atoms, i_mol, i_mol_atom_ind, i_mol_atoms,
     
     chk = False # NOTE: this could be a source of some issue
     dist_pairs = []
+    dist_pairs_names = []
     for criterion in criteria:
         if criterion["distance"] is not None: 
             # get names of residue IDs and atoms being evaluated 
@@ -313,13 +318,21 @@ def check_criteria(criteria, filtered_atoms, i_mol, i_mol_atom_ind, i_mol_atoms,
             j_atom = int(j_mol_atom_ind + j_mol_atoms.index(j_atom_name))
             
             dist_pairs.append([i_atom, j_atom])
-
+            dist_pairs_names.append([traj_filtered.topology.atom(int(i_atom)),traj_filtered.topology.atom(int(j_atom))])
+            
     # get distance between i_atom, j_atom
     dist = md.compute_distances(traj_filtered, dist_pairs) 
-    
+   
     # check criteria
-    dist_cri_chks = np.sum(dist < criterion["distance"])
+    chk_indices = dist < criterion["distance"]
+    dist_cri_chks = np.sum(chk_indices)
+    dist_pairs_names = np.array(dist_pairs_names)
     chk_dist = dist_cri_chks >= criterion["min_true"] 
+    
+    if dist_cri_chks > 0.0:
+        logging.debug("list of distances within criterion\n%s", dist[chk_indices])
+        logging.debug("list of pair names evaluated\n%s", dist_pairs_names[chk_indices[0]])
+        logging.debug("%d atoms passed %0.2f distance criteria between %s---%s", dist_cri_chks, criterion["distance"], traj_filtered.topology.residue(int(i_mol)), traj_filtered.topology.residue(int(j_mol)))
     
     # once an atom pair satisfies criteria, the molecules form an edge
     if chk_dist:

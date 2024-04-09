@@ -2,6 +2,7 @@ import os
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.ticker import MultipleLocator, AutoMinorLocator
+import logging
 
 def plt_metric(metrics, output):
     """
@@ -11,6 +12,7 @@ def plt_metric(metrics, output):
     output : Path object
 
     """
+    logging.getLogger('matplotlib').setLevel(logging.WARNING)
     #plt.rc('text', usetex=True)
     plt.rc('font', family='serif')
     plt.rc('xtick',labelsize=26)
