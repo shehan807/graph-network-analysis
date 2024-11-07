@@ -5,12 +5,13 @@ Code for calculating inter-species cluster network diameters for various MD simu
     * `network_analysis.py` functions for creating graphs and calculating graph metrics
     	* `make_graph`: create NetworkX Graph
     	* `compute_metric`: calculate NetworkX Graph [diameter](https://networkx.org/documentation/stable/reference/algorithms/generated/networkx.algorithms.distance_measures.diameter.html) 
-    	* `get_network`: apply (cell-linked list algorithm)[https://github.com/glennklockwood/allen-tildesley/blob/master/link-cell.f] to generate edge list 
+    	* `get_network`: apply [cell-linked list algorithm](https://github.com/glennklockwood/allen-tildesley/blob/master/link-cell.f) to generate edge list 
     * `visualization.py` plotting diameters of graph network
     * `util.py` functions for computing distances, angles, and creating cell maps
 * `examples/` 
-    * `water/` See  Int. J. Mol. Sci. 2020, 21(2), 403; https://doi.org/10.3390/ijms21020403 
-    * `N1888/` See J. Phys. Chem. B 2024. https://doi.org/10.1021/acs.jpcb.4c06255
+    * `water/` See  [Int. J. Mol. Sci. 2020, 21(2), 403](https://doi.org/10.3390/ijms21020403) 
+    * `N1888/` See [J. Phys. Chem. B 2024.](https://doi.org/10.1021/acs.jpcb.4c06255)
+      
 # Example: Water cluster calculations
 Reproducing the water cluster analysis results requires 3 steps. Following the `examples/water' directory: 
 
