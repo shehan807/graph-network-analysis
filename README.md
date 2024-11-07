@@ -15,7 +15,9 @@ Code for calculating inter-species cluster network diameters for various MD simu
 Reproducing the water cluster analysis results requires 3 steps. Following the `examples/water' directory: 
 
 ## 1. Installation 
-``` git clone https://github.com/shehan807/graph-network-analysis.git```
+``` 
+git clone https://github.com/shehan807/graph-network-analysis.git
+```
 
 ## 2. Set up confing.yaml
 The `config.yaml` contains all tunable parameters (number of cells, cutoff distances, edge criteria definitions, etc) to obtain a cluster of like-species from an MD trajectory. The example below specifies a water molecule residue, `HOH` along with a distance criteria of 0.36 nanometers to generate two oxygen atoms, `O-O`, as nodes connected by an edge. 
@@ -43,7 +45,9 @@ For automating the process of creating numerous `config.yaml` files, see `exampl
 ## 3. Run Shell Script
 Create an `inputs` directory to place a `<topology>.pdb` and `<trajectory>.dcd` file and run
 
-```./run_analysis```
+```
+./run_analysis
+```
 
 The `/outputs` directory will contain a pickle file for the edges (to avoid having to rerun NetworkX edge generation in the future) along with the generated probability ditribution of diameters, $P(d)$, that should look something like:
 
