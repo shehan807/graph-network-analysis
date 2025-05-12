@@ -1,0 +1,11 @@
+name: cluster-analysis
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - mdtraj
+  - networkx
+  - matplotlib
+  - yaml
+  - conda-forge::pyaml
+  - joblib
