@@ -44,7 +44,7 @@ def main():
     res_index = [i for i in range(len(residues))]
     logging.info("%d %s residues found.", len(res_index), residue_name)
 
-    num_frames = 10 
+    num_frames = 50 
     # obtain edges 
     #if os.environ["MULTINODE"] == True:
     #    pass
