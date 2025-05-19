@@ -1,0 +1,25 @@
+---------------------------------------
+Begin Slurm Prolog: May-18-2025 19:42:26
+Job ID:    2078857
+User ID:   sparmar32
+Account:   hive-jmcdaniel43
+Job name:  water-cluster
+Partition: hive
+QOS:       normal
+---------------------------------------
+atl1-1-01-016-20-2.pace.gatech.edu
+Done    Sun May 18 07:42:31 PM EDT 2025
+Elapsed time: 485447:42:31 (hh:mm:ss)
+Elapsed time: 1747611751 seconds
+---------------------------------------
+Begin Slurm Epilog: May-18-2025 19:42:31
+Job ID:        2078857
+User ID:       sparmar32
+Account:       hive-jmcdaniel43
+Job name:      water-cluster
+Resources:     cpu=16,mem=64G,node=1
+Rsrc Used:     cput=00:01:20,vmem=0,walltime=00:00:05,mem=40388K,energy_used=0
+Partition:     hive
+QOS:           normal
+Nodes:         atl1-1-01-016-20-2
+---------------------------------------

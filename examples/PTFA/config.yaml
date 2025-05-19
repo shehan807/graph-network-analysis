@@ -1,10 +1,14 @@
-num_cores: 1 # Number of cores/processes for joblib.Parallel 
+num_cores: 16 # Number of cores/processes for joblib.Parallel 
 num_cells: 10 # Number of cells to divide along each dimension of MD box 
 cutoff: 0.4 # cutoff distance, nm
 residue_name: "HOH" # species for inter-species cluster analysis
 criteria: # list of criteria for network edge
-  - name: "O-O" # atom symbols 
-    distance: 0.36 # nm 
+  - name: "H1-O" # atom symbols 
+    distance: 0.22 # nm 
+    min_true: 1
+    angle: None # deg
+  - name: "H2-O" # atom symbols 
+    distance: 0.22 # nm 
     min_true: 1
     angle: None # deg
       #  - name: "H1-O"
