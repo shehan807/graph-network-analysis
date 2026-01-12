@@ -1,16 +1,28 @@
-num_cores: 1 # Number of cores/processes for joblib.Parallel 
-num_cells: 10 # Number of cells to divide along each dimension of MD box 
+num_cores: 1 # Number of cores/processes for joblib.Parallel
+num_cells: 10 # Number of cells to divide along each dimension of MD box
 cutoff: 0.4 # cutoff distance, nm
 residue_name: "HOH" # species for inter-species cluster analysis
 criteria: # list of criteria for network edge
-  - name: "O-O" # atom symbols 
-    distance: 0.36 # nm 
+  # Distance-only criterion (backward compatible)
+  - name: "O-O" # atom symbols: first atom on i_mol, second on j_mol
+    distance: 0.36 # nm
     min_true: 1
-    angle: None # deg
-      #  - name: "H1-O"
-      #    distance: 0.245
-      #    angle: 30.0
-      #  - name: "H2-O"
-      #    distance: 0.245
-      #    angle: 30.0
+    angle: None # no angle check
+  # Example: H-bond criteria with angle (commented out)
+  # Angle is measured at vertex (first atom in name): O(i_mol)---H1(i_mol)---O(j_mol)
+  # 180 deg = perfectly linear H-bond
+  # - name: "H1-O"
+  #   distance: 0.245
+  #   min_true: 1
+  #   angle:
+  #     bond_atom: "O"  # atom on i_mol bonded to vertex (H1)
+  #     min: 150.0      # minimum angle in degrees
+  #     max: 180.0      # maximum angle in degrees
+  # - name: "H2-O"
+  #   distance: 0.245
+  #   min_true: 1
+  #   angle:
+  #     bond_atom: "O"
+  #     min: 150.0
+  #     max: 180.0
 check_pkl: True # check if edges.pkl exists in code

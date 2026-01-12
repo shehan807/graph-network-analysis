@@ -115,8 +115,8 @@ def get_network(xyz, box, num_cells, cutoff, frame, atom_per_res, residues, atom
                 i_mol_atoms = filtered_atoms[i_mol_atom_ind:i_mol_atom_ind+atom_per_res]
                 j_mol_atoms = filtered_atoms[i_mol_atom_ind:i_mol_atom_ind+atom_per_res]
                 
-                # check all criteria
-                if check_criteria(criteria, filtered_atoms, i_mol, i_mol_atom_ind, i_mol_atoms, j_mol, j_mol_atom_ind, j_mol_atoms, xyz, traj_filtered): edges.append((int(i_mol), int(j_mol)))
+                # check all criteria (using check_criteria for angle support)
+                if check_criteria(criteria, filtered_atoms, i_mol, i_mol_atom_ind, i_mol_atoms, j_mol, j_mol_atom_ind, j_mol_atoms, xyz, traj_filtered, box): edges.append((int(i_mol), int(j_mol)))
                 j_mol = linked_list[int(j_mol)]
         
             # loop through neighboring cells 
@@ -141,8 +141,8 @@ def get_network(xyz, box, num_cells, cutoff, frame, atom_per_res, residues, atom
                     # obtain slice of filtered_atoms for just i_mol and j_mol
                     i_mol_atoms = filtered_atoms[i_mol_atom_ind:i_mol_atom_ind+atom_per_res]
                     j_mol_atoms = filtered_atoms[i_mol_atom_ind:i_mol_atom_ind+atom_per_res]
-                    # check all criteria again
-                    if check_criteria(criteria, filtered_atoms, i_mol, i_mol_atom_ind, i_mol_atoms, j_mol, j_mol_atom_ind, j_mol_atoms, xyz, traj_filtered): edges.append((int(i_mol), int(j_mol)))
+                    # check all criteria (using check_criteria for angle support)
+                    if check_criteria(criteria, filtered_atoms, i_mol, i_mol_atom_ind, i_mol_atoms, j_mol, j_mol_atom_ind, j_mol_atoms, xyz, traj_filtered, box): edges.append((int(i_mol), int(j_mol)))
 
                     #See if there's an atom linked to j_mol
                     j_mol = linked_list[int(j_mol)]

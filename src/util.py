@@ -186,155 +186,229 @@ def get_distance(i_atom, j_atom, box):
     disp -= shift
     return np.sqrt((disp*disp).sum()), disp
 
-def get_angle(xyz, i_atom, j_atom, h_atom, box):
+def compute_angle(bond_atom_xyz, vertex_atom_xyz, ref_atom_xyz, box):
     """
-    Parameters
-    -----------
-    xyz : np.ndarray
-        contains the coordinates of water molecules
-    i_oxygen : int
-        index of oxygen atom on molecule i
-    j_oxygen : int
-        index of oxygen atom on molecule j
-    h_atom : int
-        index of hydrogen atom that the angle is computed for
-    box : float
-        box dimension
+    Compute angle at vertex atom with periodic boundary conditions.
 
-    Returns
-    -----------
-    theta : float
-        computed angle
-    """
-    #Displacement between i_oxygen and the h_atom
-    dist, disp_1 = get_distance(water_xyz[i_oxygen, :], water_xyz[h_atom, :], box)
-    #Displacement between i_oxygen and j_oxygen
-    dist, disp_2 = get_distance(water_xyz[i_oxygen, :], water_xyz[j_oxygen, :], box)
-
-    #Compute cosine as dot product
-    mag_u = np.sqrt((disp_1 * disp_1).sum())
-    mag_v = np.sqrt((disp_2 * disp_2).sum())
-    cosine = ((disp_1 * disp_2).sum()) / mag_u / mag_v
-    
-    if cosine < -0.999999999:
-      theta = 3.14159265359
-    elif cosine > 0.999999999:
-      theta = 0.0
-    else:
-      theta = np.arccos(cosine)
-    theta = theta*180/3.14159265359
-
-    return theta
-
-def check_hbond_criteria(water_xyz, i_oxygen, j_oxygen, box):
-    """
-    Parameters
-    -----------
-    water_xyz : np.ndarray
-        contains the coordinates of water molecules
-    i_oxygen : int
-        index of oxygen atom on molecule i
-    j_oxygen : int
-        index of oxygen atom on molecule j
-    box : float
-        box dimension
-
-    Returns
-    -----------
-    bool
-        Returns True if the hydrogen bond criteria is met, False otherwise
-    """
-
-    #Hydrogens on i_oxygen
-    h1 = i_oxygen + 1
-    h2 = i_oxygen + 2
-    h_atoms = np.asarray([h1, h2])
-
-    #Get distances between hydrogens and j_oxygen
-    dist_1, disp = get_distance(water_xyz[h1, :], water_xyz[j_oxygen, :], box)
-    dist_2, disp = get_distance(water_xyz[h2, :], water_xyz[j_oxygen, :], box)
-    dists = np.asarray([dist_1, dist_2])
-
-    #Find the minimum H-O distance
-    h_min = np.argmin(dists)
-    dist = dists[h_min]
-
-    #Check criteria
-    if dist < 0.245:
-        #Check angle criteria
-        angle = get_angle(water_xyz, i_oxygen, j_oxygen, h_atoms[h_min], box)
-        if angle < 30:
-            return True
-
-    #Hydrogens on j_oxygen
-    h1 = j_oxygen + 1
-    h2 = j_oxygen + 2
-    h_atoms = np.asarray([h1, h2])
-
-    #Get distances between hydrogens and i_oxygen
-    dist_1, disp = get_distance(water_xyz[h1, :], water_xyz[i_oxygen, :], box)
-    dist_2, disp = get_distance(water_xyz[h2, :], water_xyz[i_oxygen, :], box)
-    dists = np.asarray([dist_1, dist_2])
-
-    #Find the minimum H-O distance
-    h_min = np.argmin(dists)
-    dist = dists[h_min]
-    
-    #Check criteria
-    if dist < 0.245:
-        #Check angle criteria
-        angle = get_angle(water_xyz, j_oxygen, i_oxygen, h_atoms[h_min], box)
-        if angle < 30:
-            return True
-
-    return False
-
-def check_criteria(criteria, filtered_atoms, i_mol, i_mol_atom_ind, i_mol_atoms, j_mol, j_mol_atom_ind, j_mol_atoms, xyz, traj_filtered):
-    """
     Parameters
     ----------
-    criteria : dict
-    filtered_atoms : list
-    i_mol : int
-    i_mol_atoms : list
-    j_mol : int
-    j_mol_atoms : list
-    xyz : list
+    bond_atom_xyz : np.ndarray
+        XYZ coordinates of the bond atom on i_mol (shape: (3,))
+    vertex_atom_xyz : np.ndarray
+        XYZ coordinates of the vertex atom where angle is measured (shape: (3,))
+    ref_atom_xyz : np.ndarray
+        XYZ coordinates of the reference atom on j_mol (shape: (3,))
+    box : float
+        Cubic box dimension for periodic boundary conditions (nm)
 
-    Returns: 
-    --------
-    chk : bool
-        boolean for whether criteria is satisfied or not
+    Returns
+    -------
+    angle : float
+        Angle at vertex in degrees (range: 0-180)
+        180 degrees = perfectly linear arrangement
+
+    Notes
+    -----
+    Computes the angle: bond_atom --- vertex_atom --- ref_atom
+
+    The angle is measured at vertex_atom, between:
+      - Vector from vertex_atom to bond_atom (the intramolecular bond arm)
+      - Vector from vertex_atom to ref_atom (the intermolecular reference arm)
+
+    Uses minimum image convention for periodic boundaries.
+
+    Example:
+        For hydrogen bonding O-H...O where H is vertex:
+        - bond_atom = O on donor molecule (bonded to H)
+        - vertex_atom = H on donor molecule (the vertex)
+        - ref_atom = O on acceptor molecule
+        - An angle of 180 means O-H-O are collinear (ideal H-bond geometry)
     """
-    
-    chk = False # NOTE: this could be a source of some issue
+    # Compute displacement vector from vertex to bond atom (with PBC)
+    _, vec_to_bond = get_distance(bond_atom_xyz, vertex_atom_xyz, box)
+
+    # Compute displacement vector from vertex to reference atom (with PBC)
+    _, vec_to_ref = get_distance(ref_atom_xyz, vertex_atom_xyz, box)
+
+    # Compute magnitudes
+    mag_bond = np.sqrt(np.sum(vec_to_bond * vec_to_bond))
+    mag_ref = np.sqrt(np.sum(vec_to_ref * vec_to_ref))
+
+    # Compute cosine of angle via dot product
+    dot_product = np.sum(vec_to_bond * vec_to_ref)
+    cosine = dot_product / (mag_bond * mag_ref)
+
+    # Clamp cosine to [-1, 1] to handle numerical precision issues
+    cosine = np.clip(cosine, -1.0, 1.0)
+
+    # Convert to degrees
+    angle = np.degrees(np.arccos(cosine))
+
+    return angle
+
+def check_criteria(criteria, filtered_atoms, i_mol, i_mol_atom_ind, i_mol_atoms,
+                   j_mol, j_mol_atom_ind, j_mol_atoms, xyz, traj_filtered, box):
+    """
+    Check if molecule pair (i_mol, j_mol) satisfies edge criteria (with angle support).
+
+    Parameters
+    ----------
+    criteria : list of dict
+        List of criteria from config.yaml. Each criterion has:
+        - name: "atom1-atom2" (atom1 on i_mol, atom2 on j_mol)
+        - distance: float threshold in nm
+        - min_true: int minimum passing pairs
+        - angle: optional dict with {bond_atom, min, max} or None
+    filtered_atoms : list
+        List of atom names from filtered trajectory
+    i_mol : int
+        Index of molecule i
+    i_mol_atom_ind : int
+        Starting atom index for molecule i in filtered trajectory
+    i_mol_atoms : list
+        List of atom names in molecule i
+    j_mol : int
+        Index of molecule j
+    j_mol_atom_ind : int
+        Starting atom index for molecule j in filtered trajectory
+    j_mol_atoms : list
+        List of atom names in molecule j
+    xyz : np.ndarray
+        Coordinate array for current frame
+    traj_filtered : mdtraj.Trajectory
+        Filtered trajectory object for distance computation
+    box : float
+        Box dimension for periodic boundary conditions
+
+    Returns
+    -------
+    chk : bool
+        True if criteria are satisfied (edge should be created), False otherwise
+
+    Notes
+    -----
+    For each criterion:
+    - If only distance is specified: pair passes if distance < threshold
+    - If distance + angle is specified: pair passes if BOTH distance < threshold
+      AND angle is within [min, max] range
+
+    Angle definition for criterion name "H1-O" with bond_atom "O":
+    - Vertex: H1 on i_mol (first atom in name)
+    - Bond arm: O on i_mol (specified by bond_atom)
+    - Reference arm: O on j_mol (second atom in name)
+    - Computed angle: O(i_mol) --- H1(i_mol) --- O(j_mol)
+    - 180 degrees = perfectly linear (ideal H-bond geometry)
+
+    Config example:
+        criteria:
+          - name: "H1-O"
+            distance: 0.245
+            min_true: 1
+            angle:
+              bond_atom: "O"
+              min: 150.0
+              max: 180.0
+    """
+    chk = False
     dist_pairs = []
     dist_pairs_names = []
+    criteria_info = []  # store criterion info for each pair
+
     for criterion in criteria:
-        if criterion["distance"] is not None: 
-            # get names of residue IDs and atoms being evaluated 
+        if criterion["distance"] is not None:
+            # get names of residue IDs and atoms being evaluated
             i_atom_name, j_atom_name = criterion["name"].split('-')
             i_atom = int(i_mol_atom_ind + i_mol_atoms.index(i_atom_name))
             j_atom = int(j_mol_atom_ind + j_mol_atoms.index(j_atom_name))
-            
+
             dist_pairs.append([i_atom, j_atom])
-            dist_pairs_names.append([traj_filtered.topology.atom(int(i_atom)),traj_filtered.topology.atom(int(j_atom))])
-            
+            dist_pairs_names.append([traj_filtered.topology.atom(int(i_atom)),
+                                     traj_filtered.topology.atom(int(j_atom))])
+            criteria_info.append({
+                'criterion': criterion,
+                'i_atom': i_atom,
+                'j_atom': j_atom,
+                'i_atom_name': i_atom_name,
+                'j_atom_name': j_atom_name
+            })
+
+    # return early if no distance pairs to check
+    if len(dist_pairs) == 0:
+        return chk
+
     # get distance between i_atom, j_atom
-    dist = md.compute_distances(traj_filtered, dist_pairs) 
-   
-    # check criteria
-    chk_indices = dist < criterion["distance"]
-    dist_cri_chks = np.sum(chk_indices)
-    dist_pairs_names = np.array(dist_pairs_names)
-    chk_dist = dist_cri_chks >= criterion["min_true"] 
-    
-    if dist_cri_chks > 0.0:
-        logging.debug("list of distances within criterion\n%s", dist[chk_indices])
-        logging.debug("list of pair names evaluated\n%s", dist_pairs_names[chk_indices[0]])
-        logging.debug("%d atoms passed %0.2f distance criteria between %s---%s", dist_cri_chks, criterion["distance"], traj_filtered.topology.residue(int(i_mol)), traj_filtered.topology.residue(int(j_mol)))
-    
-    # once an atom pair satisfies criteria, the molecules form an edge
+    dist = md.compute_distances(traj_filtered, dist_pairs)
+
+    # check criteria with angle support
+    passing_count = 0
+    frame_xyz = traj_filtered.xyz[0]  # coordinates for angle computation
+
+    for idx, info in enumerate(criteria_info):
+        criterion = info['criterion']
+        pair_dist = dist[0, idx]
+
+        # check distance criterion
+        if pair_dist >= criterion["distance"]:
+            continue  # distance check failed
+
+        # distance check passed - now check angle if configured
+        angle_config = criterion.get("angle")
+
+        # Handle angle: None, angle: "None", or missing angle field
+        if angle_config is None or angle_config == "None" or not isinstance(angle_config, dict):
+            # no angle criterion - distance-only check passed
+            passing_count += 1
+            logging.debug("Distance criterion passed: %s-%s dist=%.4f < %.4f",
+                         info['i_atom_name'], info['j_atom_name'],
+                         pair_dist, criterion["distance"])
+        else:
+            # angle criterion is configured
+            bond_atom_name = angle_config.get("bond_atom")
+            angle_min = angle_config.get("min", 0.0)
+            angle_max = angle_config.get("max", 180.0)
+
+            if bond_atom_name is None:
+                logging.warning("Angle config missing 'bond_atom' for criterion %s",
+                               criterion["name"])
+                continue
+
+            # find bond atom index on i_mol
+            try:
+                bond_atom_local = i_mol_atoms.index(bond_atom_name)
+            except ValueError:
+                logging.warning("Bond atom '%s' not found in i_mol atoms: %s",
+                               bond_atom_name, i_mol_atoms)
+                continue
+
+            bond_atom = int(i_mol_atom_ind + bond_atom_local)
+
+            # get coordinates for angle computation
+            bond_atom_xyz = frame_xyz[bond_atom]
+            vertex_atom_xyz = frame_xyz[info['i_atom']]  # i_atom is the vertex
+            ref_atom_xyz = frame_xyz[info['j_atom']]
+
+            # compute angle
+            angle = compute_angle(bond_atom_xyz, vertex_atom_xyz, ref_atom_xyz, box)
+
+            # check angle criterion
+            if angle_min <= angle <= angle_max:
+                passing_count += 1
+                logging.debug("Distance+Angle criterion passed: %s-%s dist=%.4f angle=%.1f",
+                             info['i_atom_name'], info['j_atom_name'], pair_dist, angle)
+            else:
+                logging.debug("Angle criterion failed: %s-%s angle=%.1f not in [%.1f, %.1f]",
+                             info['i_atom_name'], info['j_atom_name'], angle, angle_min, angle_max)
+
+    # check if enough pairs passed (using last criterion's min_true for backward compat)
+    min_true = criteria_info[-1]['criterion'].get("min_true", 1) if criteria_info else 1
+    chk_dist = passing_count >= min_true
+
+    if passing_count > 0:
+        logging.debug("%d atom pairs passed criteria between %s---%s",
+                     passing_count, traj_filtered.topology.residue(int(i_mol)),
+                     traj_filtered.topology.residue(int(j_mol)))
+
+    # once enough atom pairs satisfy criteria, the molecules form an edge
     if chk_dist:
-        chk = chk_dist or chk
+        chk = True
     return chk
